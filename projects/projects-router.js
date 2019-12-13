@@ -7,7 +7,13 @@ const router = express.Router();
 router.get("/projects", (req, res) => {
   Projects.find()
     .then(projects => {
-      res.status(200).json(projects);
+      const completedProjects = projects.map(project => {
+        if (project.completed === 0) project.completed = false;
+        else if (project.completed === 1) project.completed = true;
+        return project;
+      });
+
+      res.status(200).json(completedProjects);
     })
     .catch(err => {
       console.log(err);
@@ -32,7 +38,13 @@ router.get("/projects/:id/tasks", (req, res) => {
   Projects.findTasks(id)
     .then(tasks => {
       if (tasks.length) {
-        res.status(200).json(tasks);
+        const completedTasks = tasks.map(task => {
+          if (task.completed === 0) task.completed = false;
+          else if (task.completed === 1) task.completed = true;
+          return task;
+        });
+
+        res.status(200).json(completedTasks);
       } else {
         res
           .status(404)

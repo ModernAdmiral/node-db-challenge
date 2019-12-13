@@ -7,7 +7,10 @@ exports.up = function(knex) {
         .unique()
         .notNullable();
       tbl.text("description", 255);
-      tbl.boolean("completed").defaultTo(false);
+      tbl
+        .boolean("completed")
+        .notNullable()
+        .defaultTo(false);
     })
     .createTable("task", tbl => {
       tbl.increments();
@@ -19,7 +22,10 @@ exports.up = function(knex) {
         .inTable("project");
       tbl.text("description", 255).notNullable();
       tbl.text("notes", 255);
-      tbl.boolean("completed").defaultTo(false);
+      tbl
+        .boolean("completed")
+        .notNullable()
+        .defaultTo(false);
     })
     .createTable("project_resources", tbl => {
       tbl
